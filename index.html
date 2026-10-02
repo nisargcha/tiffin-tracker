@@ -1,0 +1,264 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1, viewport-fit=cover"
+    />
+
+    <meta name="theme-color" content="#1a120c" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta
+      name="apple-mobile-web-app-status-bar-style"
+      content="black-translucent"
+    />
+    <meta name="apple-mobile-web-app-title" content="Tiffin" />
+    <meta
+      name="description"
+      content="Track lunch and dinner tiffins and calculate your monthly bill."
+    />
+
+    <title>Tiffin Ticker</title>
+
+    <link rel="manifest" href="manifest.json" />
+    <link rel="icon" href="icon.svg" type="image/svg+xml" />
+    <link rel="apple-touch-icon" href="icon-192.png" />
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+
+  <body>
+    <div class="glow glow-sun" aria-hidden="true"></div>
+    <div class="glow glow-moon" aria-hidden="true"></div>
+
+    <!-- HEADER -->
+    <header class="top">
+      <p class="kicker">Tiffin service</p>
+      <h1>Ticker</h1>
+      <p class="rate">₹<span id="rate">80</span> per tiffin</p>
+    </header>
+
+    <!-- RUNNING TOTALS -->
+    <section class="stats" aria-label="Running totals">
+      <article>
+        <span class="label">Tiffins</span>
+        <strong id="totalCount">0</strong>
+      </article>
+
+      <article>
+        <span class="label">Spent</span>
+        <strong id="totalSpend">₹0</strong>
+      </article>
+
+      <article>
+        <span class="label">This month</span>
+        <strong id="monthCount">0</strong>
+      </article>
+    </section>
+
+    <!-- DAY NAVIGATION -->
+    <section class="day-nav">
+      <button type="button" id="prevDay" aria-label="Previous day">
+        ‹
+      </button>
+
+      <div>
+        <p id="dayLabel">Today</p>
+        <time id="dayDate"></time>
+      </div>
+
+      <button type="button" id="nextDay" aria-label="Next day">
+        ›
+      </button>
+    </section>
+
+    <!-- CALENDAR -->
+    <section class="calendar-section">
+      <div class="calendar-head">
+        <div>
+          <p class="calendar-kicker">Monthly attendance</p>
+          <h2 id="calendarMonth">September 2026</h2>
+        </div>
+
+        <div class="calendar-nav">
+          <button
+            type="button"
+            id="calendarPrev"
+            aria-label="Previous month"
+          >
+            ‹
+          </button>
+
+          <button
+            type="button"
+            id="calendarNext"
+            aria-label="Next month"
+          >
+            ›
+          </button>
+        </div>
+      </div>
+
+      <div class="calendar-weekdays" aria-hidden="true">
+        <span>Sun</span>
+        <span>Mon</span>
+        <span>Tue</span>
+        <span>Wed</span>
+        <span>Thu</span>
+        <span>Fri</span>
+        <span>Sat</span>
+      </div>
+
+      <div class="calendar-grid" id="calendarGrid"></div>
+
+      <div class="calendar-legend">
+        <span>
+          <i class="legend lunch-legend"></i>
+          Lunch
+        </span>
+
+        <span>
+          <i class="legend dinner-legend"></i>
+          Dinner
+        </span>
+
+        <span>
+          <i class="legend missed-legend"></i>
+          Missed
+        </span>
+      </div>
+    </section>
+
+    <!-- SELECTED DAY -->
+    <main class="meals">
+      <article class="card lunch" id="lunchCard">
+        <div class="card-head">
+          <span class="icon" aria-hidden="true">☀</span>
+
+          <div>
+            <h2>Afternoon</h2>
+            <p>Lunch tiffin</p>
+          </div>
+        </div>
+
+        <button
+          type="button"
+          class="tick"
+          id="lunchTick"
+          data-meal="lunch"
+        >
+          Mark lunch
+        </button>
+      </article>
+
+      <article class="card dinner" id="dinnerCard">
+        <div class="card-head">
+          <span class="icon" aria-hidden="true">☾</span>
+
+          <div>
+            <h2>Night</h2>
+            <p>Dinner tiffin</p>
+          </div>
+        </div>
+
+        <button
+          type="button"
+          class="tick"
+          id="dinnerTick"
+          data-meal="dinner"
+        >
+          Mark dinner
+        </button>
+      </article>
+    </main>
+
+    <p class="day-total">
+      This day:
+      <strong id="daySpend">₹0</strong>
+    </p>
+
+    <!-- MONTHLY BILL -->
+    <section class="monthly-bill">
+      <div class="bill-header">
+        <div>
+          <p class="calendar-kicker">Tiffin bill</p>
+          <h2 id="billMonth">September 2026</h2>
+        </div>
+
+        <div class="bill-nav">
+          <button type="button" id="billPrev">‹</button>
+          <button type="button" id="billNext">›</button>
+        </div>
+      </div>
+
+      <div class="bill-card">
+        <div class="bill-stat lunch-stat">
+          <span>☀</span>
+          <div>
+            <small>Lunches</small>
+            <strong id="billLunch">0</strong>
+          </div>
+        </div>
+
+        <div class="bill-stat dinner-stat">
+          <span>☾</span>
+          <div>
+            <small>Dinners</small>
+            <strong id="billDinner">0</strong>
+          </div>
+        </div>
+
+        <div class="bill-stat total-stat">
+          <span>🍱</span>
+          <div>
+            <small>Total tiffins</small>
+            <strong id="billCount">0</strong>
+          </div>
+        </div>
+
+        <div class="bill-stat amount-stat">
+          <span>₹</span>
+          <div>
+            <small>Total amount</small>
+            <strong id="billTotal">₹0</strong>
+          </div>
+        </div>
+      </div>
+
+      <button type="button" class="copy-bill" id="copyBillBtn">
+        📋 Copy bill message
+      </button>
+
+      <p class="copy-status" id="copyStatus"></p>
+    </section>
+
+    <!-- RECENT DAYS -->
+    <section class="history">
+      <h2>Recent days</h2>
+      <ul id="historyList"></ul>
+    </section>
+
+    <!-- INSTALL -->
+    <p class="hint" id="installHint" hidden>
+      Add this to your home screen for a one-tap ticker.
+    </p>
+
+    <button
+      type="button"
+      class="install"
+      id="installBtn"
+      hidden
+    >
+      Install app
+    </button>
+
+    <!-- RESET -->
+    <footer>
+      <button type="button" class="ghost" id="resetBtn">
+        Reset all counts
+      </button>
+    </footer>
+
+    <script src="app.js"></script>
+  </body>
+</html>

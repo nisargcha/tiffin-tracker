@@ -1,0 +1,822 @@
+:root {
+  --bg: #140f0c;
+  --paper: #1f1712;
+  --paper-light: #291e17;
+  --ink: #f4e7d4;
+  --muted: #b8a48c;
+
+  --sun: #e8a54b;
+  --sun-deep: #c47a22;
+
+  --moon: #7ea0d4;
+  --moon-deep: #3d5a8a;
+
+  --green: #a8d995;
+  --red: #ef6a63;
+
+  --line: rgba(244, 231, 212, 0.12);
+
+  font-family: "Segoe UI", "Iowan Old Style", Georgia, serif;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  margin: 0;
+  min-height: 100%;
+  background:
+    radial-gradient(
+      1200px 600px at 10% -10%,
+      #3a2414 0%,
+      transparent 50%
+    ),
+    radial-gradient(
+      900px 500px at 110% 10%,
+      #1b273c 0%,
+      transparent 45%
+    ),
+    var(--bg);
+
+  color: var(--ink);
+}
+
+body {
+  max-width: 440px;
+  margin: 0 auto;
+
+  padding:
+    calc(28px + env(safe-area-inset-top))
+    18px
+    calc(28px + env(safe-area-inset-bottom));
+
+  position: relative;
+}
+
+/* -------------------------------- */
+/* BACKGROUND                       */
+/* -------------------------------- */
+
+.glow {
+  position: fixed;
+  width: 220px;
+  height: 220px;
+
+  filter: blur(70px);
+  opacity: 0.28;
+
+  pointer-events: none;
+  z-index: 0;
+}
+
+.glow-sun {
+  background: #e8a54b;
+  top: -40px;
+  left: -40px;
+}
+
+.glow-moon {
+  background: #3d5a8a;
+  top: 80px;
+  right: -60px;
+}
+
+/* -------------------------------- */
+/* GENERAL                          */
+/* -------------------------------- */
+
+header,
+.stats,
+.day-nav,
+.calendar-section,
+.meals,
+.monthly-bill,
+.history,
+footer,
+.hint,
+.install,
+.day-total {
+  position: relative;
+  z-index: 1;
+}
+
+/* -------------------------------- */
+/* HEADER                           */
+/* -------------------------------- */
+
+.kicker,
+.calendar-kicker {
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+
+  font-size: 0.68rem;
+  color: var(--muted);
+
+  margin: 0;
+
+  font-family: "Segoe UI", sans-serif;
+}
+
+h1 {
+  font-size: 2.6rem;
+  margin: 4px 0 0;
+  font-weight: 600;
+}
+
+.rate {
+  margin: 6px 0 0;
+  color: var(--sun);
+}
+
+/* -------------------------------- */
+/* STATS                            */
+/* -------------------------------- */
+
+.stats {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+
+  gap: 8px;
+  margin: 22px 0 18px;
+}
+
+.stats article {
+  background: color-mix(in srgb, var(--paper) 88%, black);
+
+  border: 1px solid var(--line);
+  border-radius: 16px;
+
+  padding: 12px 8px;
+
+  text-align: center;
+}
+
+.stats .label {
+  display: block;
+
+  font-size: 0.66rem;
+  color: var(--muted);
+
+  font-family: "Segoe UI", sans-serif;
+
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+}
+
+.stats strong {
+  display: block;
+
+  margin-top: 6px;
+
+  font-size: 1.2rem;
+}
+
+/* -------------------------------- */
+/* DAY NAVIGATION                   */
+/* -------------------------------- */
+
+.day-nav {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  margin: 8px 0 16px;
+}
+
+.day-nav div {
+  text-align: center;
+}
+
+.day-nav p {
+  margin: 0;
+  font-size: 1.05rem;
+}
+
+.day-nav time {
+  color: var(--muted);
+
+  font-size: 0.85rem;
+
+  font-family: "Segoe UI", sans-serif;
+}
+
+.day-nav button,
+.ghost,
+.install {
+  border: 1px solid var(--line);
+
+  background: var(--paper);
+  color: var(--ink);
+
+  border-radius: 999px;
+
+  cursor: pointer;
+}
+
+.day-nav button {
+  width: 44px;
+  height: 44px;
+
+  font-size: 1.4rem;
+}
+
+.day-nav button:disabled {
+  opacity: 0.35;
+  cursor: default;
+}
+
+/* -------------------------------- */
+/* CALENDAR                         */
+/* -------------------------------- */
+
+.calendar-section {
+  margin: 8px 0 24px;
+}
+
+.calendar-head {
+  display: flex;
+
+  align-items: center;
+  justify-content: space-between;
+
+  margin-bottom: 12px;
+}
+
+.calendar-head h2,
+.bill-header h2 {
+  margin: 3px 0 0;
+
+  font-size: 1.2rem;
+  font-weight: 600;
+}
+
+.calendar-nav,
+.bill-nav {
+  display: flex;
+  gap: 7px;
+}
+
+.calendar-nav button,
+.bill-nav button {
+  width: 34px;
+  height: 34px;
+
+  border: 1px solid var(--line);
+
+  background: var(--paper);
+  color: var(--ink);
+
+  border-radius: 999px;
+
+  font-size: 1.15rem;
+
+  cursor: pointer;
+}
+
+.calendar-weekdays {
+  display: grid;
+
+  grid-template-columns: repeat(7, 1fr);
+
+  gap: 5px;
+
+  margin-bottom: 5px;
+}
+
+.calendar-weekdays span {
+  text-align: center;
+
+  color: var(--muted);
+
+  font-size: 0.62rem;
+
+  font-family: "Segoe UI", sans-serif;
+
+  text-transform: uppercase;
+}
+
+.calendar-grid {
+  display: grid;
+
+  grid-template-columns: repeat(7, 1fr);
+
+  gap: 5px;
+}
+
+.calendar-day {
+  position: relative;
+
+  min-height: 57px;
+
+  padding: 6px 4px 5px;
+
+  border: 1px solid var(--line);
+  border-radius: 11px;
+
+  background: rgba(31, 23, 18, 0.92);
+
+  color: var(--ink);
+
+  cursor: pointer;
+
+  text-align: left;
+}
+
+.calendar-day:hover {
+  background: var(--paper-light);
+}
+
+.calendar-day.empty {
+  visibility: hidden;
+  pointer-events: none;
+}
+
+.calendar-day.future {
+  opacity: 0.35;
+  cursor: default;
+}
+
+.calendar-day.today {
+  border-color: var(--sun);
+}
+
+.calendar-day.selected {
+  box-shadow:
+    inset 0 0 0 1px var(--ink),
+    0 0 0 1px rgba(244, 231, 212, 0.12);
+}
+
+.calendar-number {
+  display: block;
+
+  font-size: 0.75rem;
+  font-weight: 600;
+
+  margin-bottom: 6px;
+}
+
+.calendar-meals {
+  display: flex;
+
+  gap: 3px;
+}
+
+.meal-mark {
+  display: inline-grid;
+
+  place-items: center;
+
+  width: 17px;
+  height: 17px;
+
+  border-radius: 5px;
+
+  font-size: 0.64rem;
+  font-weight: 800;
+
+  font-family: "Segoe UI", sans-serif;
+}
+
+.meal-mark.lunch {
+  background: rgba(232, 165, 75, 0.2);
+  color: var(--sun);
+}
+
+.meal-mark.dinner {
+  background: rgba(126, 160, 212, 0.2);
+  color: var(--moon);
+}
+
+.meal-mark.missed {
+  background: rgba(239, 106, 99, 0.12);
+  color: var(--red);
+}
+
+.calendar-legend {
+  display: flex;
+
+  justify-content: center;
+
+  gap: 15px;
+
+  margin-top: 10px;
+
+  color: var(--muted);
+
+  font-size: 0.7rem;
+
+  font-family: "Segoe UI", sans-serif;
+}
+
+.calendar-legend span {
+  display: flex;
+
+  align-items: center;
+
+  gap: 5px;
+}
+
+.legend {
+  width: 9px;
+  height: 9px;
+
+  display: inline-block;
+
+  border-radius: 3px;
+}
+
+.lunch-legend {
+  background: var(--sun);
+}
+
+.dinner-legend {
+  background: var(--moon);
+}
+
+.missed-legend {
+  background: var(--red);
+}
+
+/* -------------------------------- */
+/* MEALS                            */
+/* -------------------------------- */
+
+.meals {
+  display: grid;
+  gap: 14px;
+}
+
+.card {
+  border-radius: 22px;
+
+  padding: 18px;
+
+  border: 1px solid var(--line);
+
+  background:
+    linear-gradient(
+      180deg,
+      rgba(255, 255, 255, 0.04),
+      transparent 40%
+    ),
+    var(--paper);
+}
+
+.card.taken {
+  outline: 2px solid rgba(168, 217, 149, 0.45);
+}
+
+.card-head {
+  display: flex;
+
+  gap: 12px;
+
+  align-items: center;
+}
+
+.card-head h2,
+.card-head p {
+  margin: 0;
+}
+
+.card-head p {
+  color: var(--muted);
+
+  font-size: 0.9rem;
+}
+
+.icon {
+  width: 48px;
+  height: 48px;
+
+  border-radius: 14px;
+
+  display: grid;
+  place-items: center;
+
+  font-size: 1.4rem;
+}
+
+.lunch .icon {
+  background: rgba(232, 165, 75, 0.22);
+}
+
+.dinner .icon {
+  background: rgba(126, 160, 212, 0.22);
+}
+
+.tick {
+  width: 100%;
+
+  margin-top: 16px;
+
+  border: 0;
+
+  border-radius: 14px;
+
+  padding: 14px 12px;
+
+  font-size: 1.05rem;
+
+  font-weight: 600;
+
+  cursor: pointer;
+
+  font-family: inherit;
+}
+
+.lunch .tick {
+  background:
+    linear-gradient(
+      180deg,
+      var(--sun),
+      var(--sun-deep)
+    );
+
+  color: #2a1606;
+}
+
+.dinner .tick {
+  background:
+    linear-gradient(
+      180deg,
+      var(--moon),
+      var(--moon-deep)
+    );
+
+  color: #0b1322;
+}
+
+.tick.taken {
+  background: #2a3a28;
+  color: var(--green);
+}
+
+/* -------------------------------- */
+/* DAY TOTAL                        */
+/* -------------------------------- */
+
+.day-total {
+  text-align: center;
+
+  margin: 16px 0 22px;
+
+  color: var(--muted);
+}
+
+/* -------------------------------- */
+/* MONTHLY BILL                     */
+/* -------------------------------- */
+
+.monthly-bill {
+  margin-top: 10px;
+  margin-bottom: 28px;
+}
+
+.bill-header {
+  display: flex;
+
+  align-items: center;
+  justify-content: space-between;
+
+  margin-bottom: 12px;
+}
+
+.bill-card {
+  display: grid;
+
+  grid-template-columns: repeat(2, 1fr);
+
+  gap: 8px;
+}
+
+.bill-stat {
+  min-height: 92px;
+
+  display: flex;
+
+  align-items: center;
+
+  gap: 10px;
+
+  padding: 13px;
+
+  border: 1px solid var(--line);
+
+  border-radius: 17px;
+
+  background: var(--paper);
+}
+
+.bill-stat > span {
+  width: 38px;
+  height: 38px;
+
+  display: grid;
+  place-items: center;
+
+  border-radius: 11px;
+
+  font-size: 1.15rem;
+}
+
+.bill-stat small {
+  display: block;
+
+  color: var(--muted);
+
+  font-size: 0.67rem;
+
+  font-family: "Segoe UI", sans-serif;
+
+  text-transform: uppercase;
+}
+
+.bill-stat strong {
+  display: block;
+
+  margin-top: 3px;
+
+  font-size: 1.35rem;
+}
+
+.lunch-stat > span {
+  background: rgba(232, 165, 75, 0.18);
+  color: var(--sun);
+}
+
+.dinner-stat > span {
+  background: rgba(126, 160, 212, 0.18);
+  color: var(--moon);
+}
+
+.total-stat > span {
+  background: rgba(190, 133, 207, 0.18);
+  color: #c995d8;
+}
+
+.amount-stat > span {
+  background: rgba(168, 217, 149, 0.18);
+  color: var(--green);
+}
+
+.amount-stat strong {
+  color: var(--green);
+}
+
+.copy-bill {
+  width: 100%;
+
+  margin-top: 10px;
+
+  border: 0;
+
+  border-radius: 14px;
+
+  padding: 14px 12px;
+
+  background: #3b633b;
+
+  color: #e6f5dd;
+
+  font-size: 0.98rem;
+
+  font-weight: 700;
+
+  cursor: pointer;
+
+  font-family: inherit;
+}
+
+.copy-status {
+  min-height: 18px;
+
+  margin: 7px 0 0;
+
+  text-align: center;
+
+  color: var(--muted);
+
+  font-size: 0.78rem;
+}
+
+/* -------------------------------- */
+/* HISTORY                          */
+/* -------------------------------- */
+
+.history h2 {
+  font-size: 1rem;
+
+  font-weight: 600;
+
+  color: var(--muted);
+
+  letter-spacing: 0.06em;
+
+  text-transform: uppercase;
+
+  font-family: "Segoe UI", sans-serif;
+}
+
+.history ul {
+  list-style: none;
+
+  padding: 0;
+  margin: 0;
+}
+
+.history li {
+  display: flex;
+
+  justify-content: space-between;
+
+  padding: 10px 0;
+
+  border-bottom: 1px solid var(--line);
+
+  font-size: 0.95rem;
+
+  cursor: pointer;
+}
+
+.history .empty {
+  color: var(--muted);
+}
+
+/* -------------------------------- */
+/* INSTALL                          */
+/* -------------------------------- */
+
+.hint {
+  color: var(--muted);
+
+  font-size: 0.9rem;
+
+  text-align: center;
+}
+
+.install {
+  display: block;
+
+  width: 100%;
+
+  padding: 12px;
+
+  margin-top: 8px;
+}
+
+[hidden] {
+  display: none !important;
+}
+
+/* -------------------------------- */
+/* RESET                            */
+/* -------------------------------- */
+
+.ghost {
+  display: block;
+
+  margin: 24px auto 0;
+
+  padding: 8px 16px;
+
+  background: transparent;
+
+  color: var(--muted);
+
+  font-size: 0.85rem;
+}
+
+/* -------------------------------- */
+/* MOBILE                           */
+/* -------------------------------- */
+
+@media (max-width: 360px) {
+  body {
+    padding-left: 12px;
+    padding-right: 12px;
+  }
+
+  .calendar-grid {
+    gap: 3px;
+  }
+
+  .calendar-day {
+    min-height: 53px;
+  }
+
+  .meal-mark {
+    width: 15px;
+    height: 15px;
+  }
+
+  .calendar-legend {
+    gap: 9px;
+  }
+
+  .bill-stat {
+    padding: 10px;
+  }
+}
